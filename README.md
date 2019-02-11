@@ -2,7 +2,7 @@
   
 ### A. 네이밍
 
- **1.** **define, namespace, enum class, const, constexpr, goto** : **대문자** 와 **밑줄** 을 사용합니다.  
+ **1.** **define, namespace, enum class, const, constexpr, goto(?)** : **대문자** 와 **밑줄** 을 사용합니다.  
 *    ` #define DEBUG_MODE `
 *    ` #define _NODISCARD [[nodiscard]]   `
 *    ` namespace CONVERT_UTIL {...} `  
@@ -10,7 +10,7 @@
 *    ` enum WEAPON_PRICE : int { ... }; `
 *    ` constexpr int SERVER_PORT_NUMBER = 9000; `
 *    ` const int HANDGUN_PRICE = 1000; `
-*    ` goto  `
+*    ` goto LIKE_RECURSION;`
  
  **2.** **using, typedef** : 첫 글자를 **밑줄**로, 각 단어의 첫 글자를 **대문자** 로 사용합니다.
 *    ` using _UserIter = std::map< int, UserData >::iterator; `
@@ -21,14 +21,15 @@
 *    ` struct SocketInfo; `
 > **a.** 다만, 해당 클래스가 추상클래스일 경우, 클래스 앞에 **Base**를 붙여줍니다.
 >*    ` class BaseWeapon abstract {...}; `
+>         
 > **b.** 또 해당 클래스가 인터페이스일 경우, 클래스 앞에 **InterFace**를 붙여줍니다.
 >*    ` __interface class InterFaceBaseWeapon {...}; `
 
  **4.** **함수** : 시작 글자와 각 단어의 첫 글자를 **대문자**로 사용합니다. (private, public 멤버 함수 동일)
 *    ` bool EnterUserWithNickname(const string& inNickname) {...}; `
-*    ` int GetSpeed() {...}; `
+*    ` int GetSpeed() {...}; `     
 > **a.** Get, Set, Ref 함수를 제외하고는 **함수의 기능을 명확하게 묘사할 수 있는 이름**을 사용하도록 노력합니다.
->*    ` bool CheckBossMonster(const BossMonster&); -> bool IsSpawnBossMonster(const BossMonster&); `
+>*    ` (BAD) bool CheckBossMonster(const BossMonster&); => (GOOD) bool IsSpawnBossMonster(const BossMonster&); `
 
  **5.** **변수** : 시작 글자를 **소문자**로, 각 단어의 첫 글자를 **대문자**로 사용합니다. (private, public 멤버 변수 동일)
 *    ` float equipedItemWeight; `
@@ -36,8 +37,10 @@
 *    ` BossMonster bossMonster; `
 > **a.** 예외적으로 원시 포인터를 사용할 경우, **p**를 사용합니다.
 >*    ` NpcController* pNpcController; `	
-> **b.** 변수 이름을 지을 때, **변수를 명확하게 묘사할 수 있는 이름을 사용하도록** 노력합니다.
->*    ` bool is(const BossMonster&); -> bool IsSpawnBossMonster(const BossMonster&); `
+>
+> **b.** 변수 이름을 지을 때, **변수를 명확하게 묘사할 수 있는 이름을 사용하도록** 노력합니다.        
+>
+>*    ` bool isRunBossMonster(const BossMonster&); -> bool IsSpawnBossMonster(const BossMonster&); `        
 > **c.** 변수 이름을 지을 때, 길어지더라도 **불필요한 약자를 사용하지 않도록** 노력합니다.
 
  **6.** **매개변수와 반환값** : 용도에 따라, **in**, **out**, **ret**을 접두어로, 이후 각 단어의 첫 글자를 **대문자**로 사용합니다.
@@ -183,14 +186,64 @@ switch (grade)
 
 ----
 
-### C. 주석 달기 
+### C. 주석 활용
 
-**1.** 적절한 네이밍을 통해, 주석 작성을 최소화합니다. 다만 협업 시 공유되는 코드나, 주석이 필요할 것으로 보이는 부분에는 항상 주석을 작성합니다.
+**1.** 적절한 네이밍, 리뷰하기 쉬운 코드 작성 등 이상적인 프로그래밍을 통해, 주석 작성을 최소화합니다.   
+다만 협업 시 공유되는 코드나, 주석이 필요할 것으로 보이는 부분에는 항상 주석을 작성합니다.
 
-**2.** 파일, 클래스 및 함수 수준에서 작성되는 모든 주석에는 기본적으로 __-__, __#__, __!__, __?__ 와 __숫자__ 를 사용합니다.
-> **a.** 파일, 클래스 및 함수의 기본적인 설명을 작성 시에는 __-__ 를 사용합니다.   
-> **b.** 파일, 클래스 및 함수의 부가적인 설명을 작성 시에는 __#__ 를 사용합니다.
-> **c.** 파일, 클래스 및 함수의 주의할 부분을 작성 시에는 __!__ 를 사용합니다. 
-> **d.** 능력의 무족으로 파일, 클래스 및 함수의 명확하지 않은 부분, 추후 개선사항이 있다면 __?__ 를 사용합니다. 
+**2.** 파일, 클래스 및 함수 수준에서 작성되는 모든 주석에는 기본적으로 __-__, __#__, __!__, __?__ 와 __숫자__ 를 사용합니다.   
+> **a.** 파일, 클래스 및 함수의 기본적인 설명을 작성 시에는 __-__ 를 사용합니다.        
+> **b.** 파일, 클래스 및 함수의 부가적인 설명을 작성 시에는 __#__ 를 사용합니다.     
+> **c.** 파일, 클래스 및 함수의 주의할 부분을 작성 시에는 __!__ 를 사용합니다.      
+> **d.** 파일, 클래스 및 함수의 구현 시, 명확하지 않은 부분, 추후 개선사항이 있다면 __?__ 를 사용합니다.           
 
+**3.** 클래스, 구조체에 대한 주석 작성 시, 헤더파일(.h)에서 해당 선언 위에 작성해줍니다.
+```cpp
+/*
+	RedBlackTreeNode
+		- 레드 블랙 트리 (적흑나무) 를 구성하는 단위(Node)입니다.
+		
+	#0. DATA는 보관할 데이터, KEY_TYPE은 GetKey()의 반환되는 자료형입니다.
+		
+	!0. DATA는 의무적으로 GetKey() 함수를 제공해야합니다.
+	!1. KEY_TYPE이 기초 자료형이 아닐 경우 일부 연산자를 요구합니다. (TestKey Class를 참고해주세요!)
+		- 키 값 크기 비교에 사용될 연산자 operator<()를 제공(오버로딩)해야합니다.
+		- 키 값이 동일한지 검사할때 사용될 연산자 operator==()를 제공(오버로딩)해야합니다.
+		- 출력에 사용될 연산자 operator<<()를 제공(오버로딩)해야합니다.
+	!2. DATA와 KEY_TYPE은 기본 생성자를 요구합니다.
+		- rbTree는 pNullNode(NIL)를 생성하는데, 이때 사용될 기본생성자를 요구합니다.
+
+	?0. 이동 연산자가 구현이 될 경우 성능적인 이점이 있는 지, 문제는 발생하지 않는 지에 대한 테스트 필요.
+*/
+template <typename DATA, typename KEY_TYPE>
+class RedBlackTreeNode { ... };
+```
+
+**4.** 함수에 대한 주석 작성 시, 코드파일(.cpp)에서 해당 함수 정의 위에 작성해줍니다.
+
+```cpp
+/*
+	Node* Pop()
+		- 스택의 Top Pointer에서 노드를 꺼내 반환합니다.
+
+	#0. 인자 : void
+	#1. 출력 : Pop되는 Node의 포인터
+
+	!1. 스택이 비어 있을 때 Pop을 호출한 경우, Warning Log를 출력하며, nullptr를 반환합니다. ( Stack Underflow )
+*/
+SIMPLE_STACK::Node* SIMPLE_STACK::SimpleStack::Pop() {...};
+```
+
+**5.** n줄의 코드에 대해 주석이 필요할 경우, __//__ 으로 해당 코드가 시작되기 전에 작성합니다.
+**6.** if-else 문에서, 마지막 else를 설명할 수 있을 때, 최적화와 코드 리뷰를 위해, 주석을 사용합니다.
+```cpp
+	if(inCharacterType == CHARACTER_TYPE::ENGLISH) std::cout<< "영어입니다. \n";
+	else if(inCharacterType == CHARACTER_TYPE::KOREAN) std::cout<< "한글입니다. \n";
+	else if(inCharacterType == CHARACTER_TYPE::NUMBER) std::cout<< "숫자입니다. \n";
+	else /* if(inCharacterType == CHARACTER_TYPE::OTHER) */ std::cout<< "기타 문자 타입입니다. \n";
+```
+
+----
+
+### D. 클래스의 생성
 
