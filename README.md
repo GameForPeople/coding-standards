@@ -40,8 +40,11 @@
 >
 > **b.** 변수 이름을 지을 때, **변수를 명확하게 묘사할 수 있는 이름을 사용하도록** 노력합니다.        
 >
->*    ` bool isRunBossMonster(const BossMonster&); -> bool IsSpawnBossMonster(const BossMonster&); `        
+>*    ` bool isRunBossMonster(const BossMonster&); -> bool IsSpawnBossMonster(const BossMonster&); `      
+>  
 > **c.** 변수 이름을 지을 때, 길어지더라도 **불필요한 약자를 사용하지 않도록** 노력합니다.
+>
+> **d.** 다만 일시적인 로컬 변수를 사용할 때는, **temp**를 접두어로, 이후 각 단어의 첫 글자를 **대문자**로 사용합니다.
 
  **6.** **매개변수와 반환값** : 용도에 따라, **in**, **out**, **ret**을 접두어로, 이후 각 단어의 첫 글자를 **대문자**로 사용합니다.
 *    ` void SetMoney( const int inMoney ); `
@@ -234,7 +237,8 @@ class RedBlackTreeNode { ... };
 SIMPLE_STACK::Node* SIMPLE_STACK::SimpleStack::Pop() {...};
 ```
 
-**5.** n줄의 코드에 대해 주석이 필요할 경우, __//__ 으로 해당 코드가 시작되기 전에 작성합니다.
+**5.** n줄의 코드에 대해 주석이 필요할 경우, __//__ 으로 해당 코드가 시작되기 전에 작성합니다.    
+     
 **6.** if-else 문에서, 마지막 else를 설명할 수 있을 때, 최적화와 코드 리뷰를 위해, 주석을 사용합니다.
 ```cpp
 	if(inCharacterType == CHARACTER_TYPE::ENGLISH) std::cout<< "영어입니다. \n";
@@ -245,5 +249,16 @@ SIMPLE_STACK::Node* SIMPLE_STACK::SimpleStack::Pop() {...};
 
 ----
 
-### D. 클래스의 생성
+### D. 클래스, 구조체에 관하여
 
+**1. 클래스 혹은 구조체의 선정** : 멤버 변수, 생성자, 소멸자, 연산자만으로 구성될 경우 구조체로, 이외에는 클래스를 사용합니다.
+
+**2. 생성자**
+
+> **a.** 생성자의 초기화리스트는 모든 멤버 변수를 포함해야합니다. 
+
+> **b.** 예외를 발생시키지 않는 생성자는 성능과 예외 완전성 보증을 위해 noexcept 지정자를 사용합니다.
+
+> **c.** 모든 기본생성자에 대해, 사용할 경우 default를, 사용하지 않을 경우 delete를 명시합니다.
+
+> **d.** 모든 기본생성자에 대해, 사용할 경우 default를, 사용하지 않을 경우 delete를 명시합니다.
