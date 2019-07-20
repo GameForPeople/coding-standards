@@ -2,6 +2,19 @@
   
 ### A. 네이밍
 
+
+ **0.** 파일명은 시작 글자와 각 단어의 첫 글자를 **대문자**로 사용합니다.
+*    ` NetworkManager.cpp `  
+*    ` MemoryUnit.h ` 
+> **a.** 소스파일은 ".cpp"를, 헤더 파일은 ".h"의 확장자를 갖으며, 대부분의 경우 한 쌍으로 이루어집니다.
+>*    ` BaseItem.cpp <=> BaseItem.h `
+>
+> **b.** 다만 템플릿과 관련된, 소스파일은 ".hpp"의 확장자를 사용합니다. 이는 h에 포함되는 cpp이기 때문입니다.
+>*    ` CustomContainer.h  <=>  CustomContainer.hpp, CustomContainer.cpp `
+>
+> **c.** 헤더에 포함되는 헤더파일의 경우 ".hh"의 확장자를 사용합니다. 이는 h에 포함되는 h이기 때문입니다.
+>*    ` ConstexprDefine.hh `
+
  **1.** **define, namespace, enum class, const, constexpr, goto(?)** : **대문자** 와 **밑줄** 을 사용합니다.  
 *    ` #define DEBUG_MODE `
 *    ` #define _NODISCARD [[nodiscard]]   `
